@@ -17,14 +17,22 @@ const hbs = create({
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+const producto =  ["banana", "cebollas", "lechuga", "papas", "pimenton", "tomate"]
+const productoCarro = []
 
 app.get('/', (req, res) => {
     res.render('home', {
         layout:'main',
-        producto : ["banana", "cebollas", "lechuga", "papas", "pimenton", "tomate"],
+        producto : producto,
+        productoCarro: productoCarro,
     });
 });
 
-
+app.get('/add-cart/:fruit', (req, res) => {
+    const producto = req.params.fruit;
+    
+    productoCarro.push(producto);
+    res.redirect('/')
+});
 
 app.listen( PUERTO, () => console.log(`Servidor listo ${PUERTO}`))
